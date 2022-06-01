@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DaisyDays (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DaisyDays (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
