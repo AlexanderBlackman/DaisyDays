@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using static System.Math;
 
 namespace DaisyDays.Tools
 {
@@ -13,14 +14,7 @@ namespace DaisyDays.Tools
             //Create a new bitmap object from the specified file.
             Bitmap originalImage = new Bitmap(selectedImagePath);
 
-            // CREATE A WAY TO ALLOW NON PRIMES
 
-
-            int regularRow = (int)System.Math.Sqrt(numberOfParts);//try increasing by 1
-            //int numberOfRows = regularRow;
-            int remainingRow = numberOfParts - (regularRow * regularRow);
-            if (remainingRow != 0)
-                regularRow++;
 
             //Store original format
             System.Drawing.Imaging.PixelFormat format = originalImage.PixelFormat;
@@ -32,26 +26,23 @@ namespace DaisyDays.Tools
             int width = originalImage.Width;
             int height = originalImage.Height;
 
+            //Calculate The number of Rows and Columns
+            //int regularRow = (width > height) ?
+            //    (int)Ceiling(Sqrt(numberOfParts)) :
+            //    (int)Floor(Sqrt(numberOfParts));
+            int regularRow = (int)Floor(Sqrt(numberOfParts));//This is an attempt to isolate a bug   - using this splits everything into three rows of
+                                                             //four image, plus one final one for the final part 13 instead of 17
+
+
+            int lastRow = numberOfParts % regularRow;
+            int numberOfRows = (numberOfParts - lastRow) / regularRow;
+
+
+
+
             //Calculate Width and Height of each split file.
 
-
-            //!!!!!!
-            // 'Index was outside the bounds of the arra
-
-
-            //SquareNumberArea
-
-            // float widthOfEachPart = width / regularRow;
-            //if (remainingRow != 0)
-            //    float widthOfRemainder = width / remainingRow;
-
-            //float heightOfEachPart = (remainingRow == 0) ? (height / regularRow) : height / (regularRow + 1);
             float heightOfEachPart = height / regularRow;
-
-
-            //Make array for output image dimensions
-            //RectangleF[,] outputRects = new RectangleF[regularRow, regularRow];//Check this
-            //RectangleF[]
 
 
 
@@ -59,11 +50,12 @@ namespace DaisyDays.Tools
 
             int r;
             var ResultArray = new string[regularRow][];
-            remainingRow = (remainingRow == 0) ? regularRow : remainingRow;
+            lastRow = (lastRow == 0) ? regularRow : lastRow;
 
-            for (r = 0; r < regularRow - 1; r++)
+            //for (r = 0; r < regularRow - 1; r++)
+            for (r = 0; r < numberOfRows - 1; r++)
                 GenerateRowOfPictures(r, regularRow);
-            GenerateRowOfPictures(r, remainingRow);
+            GenerateRowOfPictures(r, lastRow);
             return ResultArray;
 
 
