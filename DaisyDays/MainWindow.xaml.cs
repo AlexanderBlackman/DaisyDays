@@ -15,7 +15,7 @@ namespace DaisyDays
         {
             ImageSpliter mySplitter = new();
             this.InitializeComponent();
-            mySplitter.SplitImage("b://thinImage.jpg", 4);
+            mySplitter.SplitImage("b://thinImage.jpg", 9);
         }
 
 
