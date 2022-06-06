@@ -27,7 +27,7 @@ namespace DaisyDays.Views
         {
             //Replace with dedicated in appsubfolder once you finish saga setup 
             StorageFolder imageFolder = await
-                StorageFolder.GetFolderFromPathAsync(@"b:\\Output");
+                StorageFolder.GetFolderFromPathAsync(@"b:\Output");
             var result = imageFolder.CreateFileQueryWithOptions
                 (new Windows.Storage.Search.QueryOptions());
             IReadOnlyList<StorageFile> imageFiles = await result.GetFilesAsync();
@@ -42,6 +42,33 @@ namespace DaisyDays.Views
             SagaPhotoViewModel photo = new SagaPhotoViewModel
                 (properties, imageFile, String.Empty);
             return photo;
+        }
+
+        private void SplitImageGridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            if (args.InRecycleQueue)
+            {
+                var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
+                var image = templateRoot.FindName("SplitPath") as Image;
+                image.Source = null;
+            }
+            if (args.Phase == 0)
+            {
+                args.RegisterUpdateCallback(ShowImage);
+                args.Handled = true;
+            }
+        }
+
+        private async void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            if (args.Phase == 1)
+            {
+                var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
+                var image = templateRoot.FindName("SplitPath") as Image;
+                var photo = args.Item as SagaPhotoViewModel;
+                image.Source = await photo.GetImageSourceAsync();
+                //args.Handled = true;
+            }
         }
     }
 }

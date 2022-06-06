@@ -9,8 +9,26 @@
     xmlns:viewmodels="using:DaisyDays.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid>
-
+    <Grid
+        Background="Purple">
+        <Grid.Resources>
+            <DataTemplate x:Key="SplitImage_ItemTemplate"
+                          x:DataType="viewmodels:SagaPhotoViewModel">
+                <Image x:Name = "SplitPath"
+                           Source="Assets/StoreLogo.png"
+                           Width ="{x:Bind ImageWidth}"/>
+            </DataTemplate>
+            <ItemsPanelTemplate x:Key="SplitImage_ItemsPanelTemplate">
+                <ItemsWrapGrid Orientation="Horizontal"
+                               HorizontalAlignment="Center"/>
+            </ItemsPanelTemplate>
+            <!--You probably need to use MaximumNumberOfRowsOrColumns somewhere-->
+        </Grid.Resources>
+        <GridView x:Name="SplitImageGridView"
+                  Background="Azure"
+                  ItemsPanel="{StaticResource SplitImage_ItemsPanelTemplate}"
+                  ItemTemplate="{StaticResource SplitImage_ItemTemplate}"
+                  ContainerContentChanging="SplitImageGridView_ContainerContentChanging"/>
     </Grid>
 
 </Page>
