@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.WinUI.UI.Controls;
+﻿using DaisyDays.ViewModels;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,18 +16,32 @@ namespace DaisyDays.Views
     /// </summary>
     public sealed partial class SplitPicturePage : Page
     {
-        //List<SagaPhotoViewModel> PicturesInFolder { get; set; } = new();
-        List<ImageEx> PicturesInFolder { get; set; } = new();
+        ObservableCollection<SagaPhotoViewModel> SagaPhotos { get; } = new();
         public SplitPicturePage()
         {
             this.InitializeComponent();
-            List<String> ImagePaths = System.IO.Directory.GetFiles("B:\\Output").ToList();
-            foreach (string path in ImagePaths)
-            {
-                //PicturesInFolder.Add(new SagaPhotoViewModel(path));
-                PicturesInFolder.Add(new ImageEx()
-                { Source = new BitmapImage(new Uri(path)) });
-            }
+            GetItemsAsync();
+        }
+
+        private async Task GetItemsAsync()
+        {
+            //Replace with dedicated in appsubfolder once you finish saga setup 
+            StorageFolder imageFolder = await
+                StorageFolder.GetFolderFromPathAsync(@"b:\\Output");
+            var result = imageFolder.CreateFileQueryWithOptions
+                (new Windows.Storage.Search.QueryOptions());
+            IReadOnlyList<StorageFile> imageFiles = await result.GetFilesAsync();
+            foreach (StorageFile imageFile in imageFiles)
+                SagaPhotos.Add(await LoadImageInfo(imageFile));
+
+        }
+
+        private async Task<SagaPhotoViewModel> LoadImageInfo(StorageFile imageFile)
+        {
+            var properties = await imageFile.Properties.GetImagePropertiesAsync();
+            SagaPhotoViewModel photo = new SagaPhotoViewModel
+                (properties, imageFile, String.Empty);
+            return photo;
         }
     }
 }

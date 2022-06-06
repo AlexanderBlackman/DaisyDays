@@ -10,24 +10,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
-        <ItemsRepeater
-            ItemsSource="{x:Bind PicturesInFolder}"
-            >
-            <ItemsRepeater.ItemTemplate>
-                <DataTemplate >
-                    <ct:ImageEx
-                        Source="{Binding PicturesInFolder, Mode=OneWay}"
-                        />
-                </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
-            <ItemsRepeater.Layout>
-                <ct:WrapLayout
-                    Orientation ="Vertical"
-                    >
 
-                </ct:WrapLayout>
-            </ItemsRepeater.Layout>
-        </ItemsRepeater>
     </Grid>
 
 </Page>

@@ -11,12 +11,16 @@ namespace DaisyDays
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             ImageSpliter mySplitter = new();
             //mySplitter.SplitImage("b://thinImage.jpg", 24);
             this.InitializeComponent();
         }
+
+
+
 
     }
 }
