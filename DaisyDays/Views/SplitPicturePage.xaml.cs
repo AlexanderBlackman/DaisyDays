@@ -17,6 +17,7 @@ namespace DaisyDays.Views
     public sealed partial class SplitPicturePage : Page
     {
         ObservableCollection<SagaPhotoViewModel> SagaPhotos { get; } = new();
+
         public SplitPicturePage()
         {
             this.InitializeComponent();
@@ -33,6 +34,7 @@ namespace DaisyDays.Views
             IReadOnlyList<StorageFile> imageFiles = await result.GetFilesAsync();
             foreach (StorageFile imageFile in imageFiles)
                 SagaPhotos.Add(await LoadImageInfo(imageFile));
+            SplitImageGridView.ItemsSource = SagaPhotos;
 
         }
 
@@ -44,7 +46,8 @@ namespace DaisyDays.Views
             return photo;
         }
 
-        private void SplitImageGridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        private void SplitImageGridView_ContainerContentChanging(ListViewBase sender,
+            ContainerContentChangingEventArgs args)
         {
             if (args.InRecycleQueue)
             {
@@ -59,7 +62,8 @@ namespace DaisyDays.Views
             }
         }
 
-        private async void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
+        private async void ShowImage(ListViewBase sender,
+            ContainerContentChangingEventArgs args)
         {
             if (args.Phase == 1)
             {
@@ -69,6 +73,11 @@ namespace DaisyDays.Views
                 image.Source = await photo.GetImageSourceAsync();
                 //args.Handled = true;
             }
+        }
+
+        private void Button_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+
         }
     }
 }

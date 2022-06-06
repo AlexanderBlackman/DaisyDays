@@ -14,9 +14,19 @@
         <Grid.Resources>
             <DataTemplate x:Key="SplitImage_ItemTemplate"
                           x:DataType="viewmodels:SagaPhotoViewModel">
-                <Image x:Name = "SplitPath"
+                <Grid>
+                    <Button Margin="0"
+                            Padding="-1"
+                            CornerRadius="0"
+                            PointerEntered="Button_PointerEntered">
+                        <Image x:Name = "SplitPath"
                            Source="Assets/StoreLogo.png"
-                           Width ="{x:Bind ImageWidth}"/>
+                           Width ="{x:Bind ImageWidth}"
+                           Margin="0"/>
+                    </Button>
+
+                </Grid>
+
             </DataTemplate>
             <ItemsPanelTemplate x:Key="SplitImage_ItemsPanelTemplate">
                 <ItemsWrapGrid Orientation="Horizontal"
@@ -24,11 +34,25 @@
             </ItemsPanelTemplate>
             <!--You probably need to use MaximumNumberOfRowsOrColumns somewhere-->
         </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <GridView x:Name="SplitImageGridView"
                   Background="Azure"
+
                   ItemsPanel="{StaticResource SplitImage_ItemsPanelTemplate}"
                   ItemTemplate="{StaticResource SplitImage_ItemTemplate}"
-                  ContainerContentChanging="SplitImageGridView_ContainerContentChanging"/>
+                  ContainerContentChanging="SplitImageGridView_ContainerContentChanging">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <!--This is to adjust for small rounding errors during image spliting-->
+                    <Setter Property="Margin" Value="-0.3"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+
+        </GridView>
+
     </Grid>
 
 </Page>
