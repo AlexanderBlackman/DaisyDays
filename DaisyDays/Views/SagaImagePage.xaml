@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="DaisyDays.Views.SagaImagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DaisyDays.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <Viewbox Height="800" Width="800"
+                 StretchDirection="Both" Stretch="Uniform">
+
+
+            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    Width="800" Height="800">
+     
+            <Image Source="B://Motivate9.jpg" Canvas.Left="0" Canvas.Top="0"/>
+            <Button
+
+            </Canvas>
+
+
+
+        </Viewbox>
+
+
+    </Grid>
+</Page>

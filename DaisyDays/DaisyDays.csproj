@@ -12,6 +12,7 @@
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 	</PropertyGroup>
 	<ItemGroup>
+		<None Remove="Views\SagaImagePage.xaml" />
 		<None Remove="Views\SplitPicturePage.xaml" />
 	</ItemGroup>
 
@@ -40,6 +41,11 @@
        package has not yet been restored -->
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnablePreviewMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\SagaImagePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\SplitPicturePage.xaml">

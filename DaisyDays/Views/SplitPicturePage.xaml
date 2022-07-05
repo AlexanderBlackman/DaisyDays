@@ -11,12 +11,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid
         Background="Purple">
+
+
         <Grid.Resources>
             <DataTemplate x:Key="SplitImage_ItemTemplate"
                           x:DataType="viewmodels:SagaPhotoViewModel">
                 <Grid>
                     <Button Margin="0"
-                            Padding="-1"
+                            Padding="-0.7"
                             CornerRadius="0"
                             PointerEntered="Button_PointerEntered">
                         <Image x:Name = "SplitPath"
@@ -56,3 +58,19 @@
     </Grid>
 
 </Page>
+<!--<GridView x:Name="SplitImageGridView"
+                  Background="Azure"
+
+                  ItemsPanel="{StaticResource SplitImage_ItemsPanelTemplate}"
+                  ItemTemplate="{StaticResource SplitImage_ItemTemplate}"
+                  ContainerContentChanging="SplitImageGridView_ContainerContentChanging">
+    <GridView.ItemContainerStyle>
+        <Style TargetType="GridViewItem">
+            -->
+<!--This is to adjust for small rounding errors during image spliting-->
+<!--
+            <Setter Property="Margin" Value="-0.3"/>
+        </Style>
+    </GridView.ItemContainerStyle>
+
+</GridView>-->
