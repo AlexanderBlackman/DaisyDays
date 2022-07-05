@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using DaisyDays.Model;
+using System.Collections.Generic;
 using System.Drawing;
 using static System.Math;
 
 
 namespace DaisyDays.Tools
 {
-    internal class SafeImageSpliter
+    public static class SafeImageSpliter
     {
 
 
-        public List<RectangleF> SplitIntoRegions(string selectedImagePath, int numberOfParts)
+        public static List<SagaEntry> SplitIntoRegions(string selectedImagePath, int numberOfParts)
         {
             //Create a new bitmap object from the specified file.
             Bitmap originalImage = new Bitmap(selectedImagePath);
-            List<RectangleF> regionsOfImage = new();
+            List<SagaEntry> SagaEntries = new();
+            int idPlaceholder = 0;
 
 
 
@@ -50,7 +52,7 @@ namespace DaisyDays.Tools
                 GenerateRowOfRegions(r, regularRow);
             GenerateRowOfRegions(r, lastRow);
             //Return list of regions.
-            return regionsOfImage;
+            return SagaEntries;
 
             //Let's try to rewrite it for any row number.
             void GenerateRowOfRegions(int r, int numberOfCols)
@@ -60,7 +62,11 @@ namespace DaisyDays.Tools
                 {
                     var myRec = new RectangleF(c * widthOfEachPart,
                                      r * heightOfEachPart, widthOfEachPart, heightOfEachPart);
-                    regionsOfImage.Add(myRec);
+                    SagaEntries.Add(new SagaEntry
+                    {
+                        ObscurableArea = myRec,
+                        DiaryEntryId = idPlaceholder++
+                    });
                 }
 
             }

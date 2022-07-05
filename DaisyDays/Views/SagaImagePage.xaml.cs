@@ -1,17 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using DaisyDays.Model;
+using DaisyDays.Tools;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,9 +12,29 @@ namespace DaisyDays.Views
     /// </summary>
     public sealed partial class SagaImagePage : Page
     {
+        string sagaImage { get; set; }
         public SagaImagePage()
         {
             this.InitializeComponent();
+            string sagaImage = "B://Motivate9.jpg";
+            //Look at your old SagaPhotoViewModel to see how to make a new one.
+            var rabbit = SafeImageSpliter.SplitIntoRegions(sagaImage, 9);
+
+            foreach (SagaEntry sagaEntry in rabbit)
+            {
+
+                var bunny = new Button()
+                {
+                    Width = sagaEntry.ObscurableArea.Width,
+                    Height = sagaEntry.ObscurableArea.Height,
+
+                };
+                Canvas.SetLeft(bunny, sagaEntry.ObscurableArea.Left);
+                Canvas.SetTop(bunny, sagaEntry.ObscurableArea.Top);
+                rootCanvas.Children.Add(bunny);
+            }
+
+
         }
     }
 }
